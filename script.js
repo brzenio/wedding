@@ -321,14 +321,14 @@ function observeGalleryItems() {
 }
 
 // Preloader functionality
-window.addEventListener('load', () => {
-    setTimeout(() => {
-        const preloader = document.querySelector('.preloader');
-        if (preloader) {
-            preloader.classList.add('hidden');
-        }
-    }, 1000);
-});
+// window.addEventListener('load', () => {
+//     setTimeout(() => {
+//         const preloader = document.querySelector('.preloader');
+//         if (preloader) {
+//             preloader.classList.add('hidden');
+//         }
+//     }, 1000);
+// });
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
