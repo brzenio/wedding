@@ -165,7 +165,7 @@ function loadGallery(galleryName, container) {
         
         const img = document.createElement('img');
         img.src = imagePath;
-        img.alt = `${galleryName} photo ${index + 1}`;
+        img.alt = `${galleryName.charAt(0).toUpperCase() + galleryName.slice(1)} ${index + 1}`;
         img.loading = 'lazy';
         
         // Detect image orientation when loaded
