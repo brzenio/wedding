@@ -1,0 +1,678 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Cormorant Garamond', 'Georgia', serif;
+    background-color: #faf9f7;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Header Styles */
+header {
+    text-align: center;
+    padding: 60px 20px 40px;
+    background: linear-gradient(135deg, #f5f0eb 0%, #faf9f7 100%);
+    border-bottom: 1px solid #e8e3dd;
+}
+
+header h1 {
+    font-size: 3.5rem;
+    font-weight: 300;
+    letter-spacing: 8px;
+    color: #2c2c2c;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: #7a7a7a;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    font-weight: 400;
+}
+
+.contact-info {
+    margin-top: 15px;
+    font-size: 0.95rem;
+    color: #666;
+}
+
+/* Navigation */
+nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 40px;
+    background-color: #fff;
+    border-bottom: 1px solid #e8e3dd;
+    flex-wrap: wrap;
+    gap: 20px;
+    position: relative;
+}
+
+.gallery-nav {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.view-toggle-container {
+    position: absolute;
+    right: 40px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.gallery-btn {
+    background-color: transparent;
+    border: 2px solid #2c2c2c;
+    color: #2c2c2c;
+    padding: 12px 40px;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Cormorant Garamond', serif;
+    text-transform: uppercase;
+}
+
+.gallery-btn:hover {
+    background-color: #2c2c2c;
+    color: #fff;
+}
+
+.gallery-btn.active {
+    background-color: #2c2c2c;
+    color: #fff;
+}
+
+/* View Toggle Switch */
+.view-label {
+    font-size: 0.9rem;
+    color: #7a7a7a;
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
+}
+
+.view-label.active {
+    color: #2c2c2c;
+    font-weight: 600;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 56px;
+    height: 28px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+}
+
+input:checked + .slider {
+    background-color: #2c2c2c;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2c2c2c;
+}
+
+input:checked + .slider:before {
+    transform: translateX(28px);
+}
+
+.slider.round {
+    border-radius: 28px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/* Gallery Container */
+.gallery-container {
+    max-width: 1400px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.gallery {
+    display: none;
+    animation: fadeIn 0.5s ease-in;
+}
+
+.gallery.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Grid View Styles - Mixed Orientation Support */
+.gallery.grid-view {
+    display: none;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-auto-rows: 250px;
+    gap: 20px;
+}
+
+.gallery.grid-view.active {
+    display: grid;
+}
+
+.gallery.grid-view .gallery-item {
+    height: 100%;
+}
+
+/* Automatically span 2 rows for vertical images in grid */
+.gallery.grid-view .gallery-item.vertical {
+    grid-row: span 2;
+}
+
+.gallery.grid-view .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Full View Styles - Natural Aspect Ratio */
+.gallery.full-view {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 60px;
+    max-width: 100%;
+    padding: 0 40px;
+}
+
+.gallery.full-view.active {
+    display: flex;
+}
+
+.gallery.full-view .gallery-item {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 90vh;
+}
+
+.gallery.full-view .gallery-item img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+}
+
+/* Gallery Item Base Styles */
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 2px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* .gallery-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+} */
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    filter: blur(0px);
+    /* transition: transform 0.5s ease, filter 0.3s ease; */
+}
+
+.gallery-item img.loading {
+    filter: blur(10px);
+    transform: scale(1.05);
+}
+
+.gallery-item img.loaded {
+    filter: blur(0px);
+    transform: scale(1);
+}
+
+/* .gallery-item:hover img {
+    transform: scale(1.02);
+    filter: brightness(1.05);
+} */
+
+
+/* Lightbox */
+.lightbox {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    animation: fadeIn 0.3s ease;
+}
+
+.lightbox.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lightbox-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 85vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#lightbox-img {
+    max-width: 100%;
+    max-height: 85vh;
+    object-fit: contain;
+    border-radius: 2px;
+}
+
+.close {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    color: #fff;
+    font-size: 50px;
+    font-weight: 300;
+    cursor: pointer;
+    z-index: 1001;
+    transition: color 0.3s ease;
+}
+
+.close:hover {
+    color: #ccc;
+}
+
+.lightbox-prev,
+.lightbox-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: none;
+    font-size: 30px;
+    padding: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    z-index: 1001;
+}
+
+.lightbox-prev {
+    left: 20px;
+}
+
+.lightbox-next {
+    right: 20px;
+}
+
+.lightbox-prev:hover,
+.lightbox-next:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.image-counter {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    font-size: 1rem;
+    letter-spacing: 1px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2.5rem;
+        letter-spacing: 5px;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+        letter-spacing: 2px;
+    }
+
+    .contact-info {
+        font-size: 0.85rem;
+    }
+
+    nav {
+        flex-direction: column;
+        padding: 20px;
+        position: relative;
+    }
+
+    .gallery-nav {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .gallery-btn {
+        padding: 10px 25px;
+        font-size: 0.9rem;
+        width: 100%;
+    }
+
+    .view-toggle-container {
+        position: static;
+        width: 100%;
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    /* Better mobile grid - 2 columns with taller rows */
+    .gallery.grid-view {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 200px;
+        gap: 12px;
+    }
+
+    /* Vertical images get more height on mobile */
+    .gallery.grid-view .gallery-item.vertical {
+        grid-row: span 2;
+    }
+
+    .gallery.full-view {
+        gap: 40px;
+        padding: 0 20px;
+    }
+
+    .close {
+        top: 10px;
+        right: 20px;
+        font-size: 40px;
+    }
+
+    .lightbox-prev,
+    .lightbox-next {
+        font-size: 24px;
+        padding: 15px;
+    }
+
+    .lightbox-prev {
+        left: 10px;
+    }
+
+    .lightbox-next {
+        right: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 2rem;
+        letter-spacing: 3px;
+    }
+
+    /* Keep 2 columns even on very small screens */
+    .gallery.grid-view {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 180px;
+        gap: 10px;
+    }
+
+    .gallery.full-view {
+        gap: 30px;
+        padding: 0 15px;
+    }
+
+    .view-label {
+        font-size: 0.8rem;
+    }
+
+    .switch {
+        width: 48px;
+        height: 24px;
+    }
+
+    .slider:before {
+        height: 16px;
+        width: 16px;
+    }
+
+    input:checked + .slider:before {
+        transform: translateX(24px);
+    }
+}
+
+
+/* Smooth scrolling behavior */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Optional: Even smoother with JavaScript easing */
+@media (prefers-reduced-motion: no-preference) {
+    * {
+        scroll-behavior: smooth;
+    }
+}
+
+/* REMOVE THIS */
+.gallery-item {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.gallery-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.hero-section {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #f5f0eb 0%, #faf9f7 50%, #f5f0eb 100%);
+    position: relative;
+}
+
+.hero-content {
+    text-align: center;
+    padding: 0 20px;
+}
+
+.hero-title {
+    font-size: 4rem;
+    font-weight: 300;
+    letter-spacing: 12px;
+    margin-bottom: 30px;
+    color: #2c2c2c;
+    animation: fadeInUp 1.2s ease;
+}
+
+.hero-subtitle {
+    font-size: 1.4rem;
+    color: #7a7a7a;
+    letter-spacing: 4px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.typewriter {
+    animation: fadeInUp 1s ease 0.3s both;
+}
+
+.typewriter-delay {
+    animation: fadeInUp 1s ease 0.6s both;
+}
+
+.typewriter-delay-2 {
+    animation: fadeInUp 1s ease 0.9s both;
+}
+
+.scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    text-align: center;
+    animation: fadeIn 2s ease 1.5s both;
+}
+
+.scroll-indicator span {
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    color: #7a7a7a;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.scroll-arrow {
+    font-size: 1.5rem;
+    color: #2c2c2c;
+    animation: bounce 2s infinite;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+@keyframes slideInFromRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.gallery.active {
+    animation: slideInFromRight 0.6s ease;
+}
+
+.lightbox-info-top {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    font-size: 0.95rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    z-index: 1001;
+}
+
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #faf9f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.preloader.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.preloader-content {
+    text-align: center;
+}
+
+.preloader-content h2 {
+    font-size: 3rem;
+    letter-spacing: 10px;
+    margin-bottom: 30px;
+    color: #2c2c2c;
+}
+
+.loading-bar {
+    width: 200px;
+    height: 2px;
+    background: #e8e3dd;
+    position: relative;
+    overflow: hidden;
+    margin: 0 auto;  /* THIS CENTERS IT */
+}
+
+.loading-bar::after {
+    content: '';
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    background: #2c2c2c;
+    animation: loading 1.5s ease-in-out infinite;
+}
+
+@keyframes loading {
+    0% { left: -50%; }
+    100% { left: 100%; }
+}
